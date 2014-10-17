@@ -15,48 +15,48 @@
 </head>
 
 <body ng-app="app">
-    <section class="container-fluid" ng-controller="ChartistExampleCtrl as chartist">
+    <section class="container-fluid">
         <h1>Chart Examples</h1>
         <div class="row">
             <div class="col-md-6">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-controller="ChartistBarCtrl as Bar">
                     <div class="panel-heading">
                         <h3 class="panel-title">Bar Chart (with live updating)</h3>
                     </div>
                     <div class="panel-body">
-                        <chartist class="ct-chart ct-golden-section" chartist-data="chartist.barData" chartist-chart-type="Bar" chartist-chart-options="chartist.barOptions" chartist-responsive-options="chartist.barResponsiveOptions" chartist-events="chartist.events"></chartist>
+                        <chartist class="ct-chart ct-golden-section" chartist-data="Bar.data" chartist-chart-type="Bar" chartist-chart-options="chartist.barOptions" chartist-responsive-options="Bar.responsiveOptions" chartist-events="Bar.events"></chartist>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-controller="ChartistLineCtrl as Line">
                     <div class="panel-heading">
                         <h3 class="panel-title">Line Chart</h3>
                     </div>
                     <div class="panel-body">
-                        <chartist class="ct-chart ct-golden-section" chartist-data="chartist.lineData" chartist-chart-type="Line" chartist-chart-options="chartist.lineOptions"></chartist>
+                        <chartist class="ct-chart ct-golden-section" chartist-data="Line.data" chartist-chart-type="Line" chartist-chart-options="Line.options"></chartist>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-controller="ChartistPieCtrl as Pie">
                     <div class="panel-heading">
                         <h3 class="panel-title">Pie Chart</h3>
                     </div>
                     <div class="panel-body">
-                        <chartist class="ct-chart ct-golden-section" chartist-data="chartist.pieData" chartist-chart-type="Pie"></chartist>
+                        <chartist class="ct-chart ct-golden-section" chartist-data="Pie.data" chartist-chart-type="Pie" chartist-handlers="Pie.handlers"></chartist>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-controller="ChartistDonutCtrl as Donut">
                     <div class="panel-heading">
                         <h3 class="panel-title">Donut Chart</h3>
                     </div>
                     <div class="panel-body">
-                        <chartist class="ct-chart ct-golden-section" chartist-data="chartist.pieData" chartist-chart-type="Pie" chartist-chart-options="chartist.donutOptions"></chartist>
+                        <chartist class="ct-chart ct-golden-section" chartist-data="Donut.data" chartist-chart-type="Pie" chartist-chart-options="Donut.options"></chartist>
                     </div>
                 </div>
             </div>

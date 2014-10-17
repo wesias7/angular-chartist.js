@@ -2,110 +2,129 @@
 (function(angular) {
     'use strict';
 
+    function pushLimit(arr, elem, limit) {
+        arr.push(elem);
+        if (arr.length > limit) {
+            arr.splice(0, 1);
+        }
+    }
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
     var module = angular.module('app', ['ngChartist']);
 
-    module.controller('ChartistExampleCtrl', ['$scope', '$interval',
-        function($scope, $interval) {
-
-            this.events = {
-                draw: function() {
-                    console.log('called');
-                }
-            };
-
-            // bar chart
-            this.barData = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                series: [
-                    [5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
-                    [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
-                ]
-            };
-
-            this.barOptions = {
-                seriesBarDistance: 15
-            };
-
-            this.barResponsiveOptions = [
-                ['screen and (min-width: 641px) and (max-width: 1024px)', {
-                    seriesBarDistance: 10,
-                    axisX: {
-                        labelInterpolationFnc: function(value) {
-                            return value;
-                        }
-                    }
-                }],
-                ['screen and (max-width: 640px)', {
-                    seriesBarDistance: 5,
-                    axisX: {
-                        labelInterpolationFnc: function(value) {
-                            return value[0];
-                        }
-                    }
-                }]
-            ];
-
-            function getRandomInt(min, max) {
-                return Math.floor(Math.random() * (max - min)) + min;
+    function ChartistBarCtrl($scope, $interval) {
+        this.events = {
+            draw: function() {
+                // console.log('called');
             }
+        };
 
-            // line chart
-            this.lineData = {
-                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                series: [
-                    [0, 1, 2, 4, 7, 6, 9, 10, 8, 10, 14, 13, 16, 14, 17, 19, 20, 31, 32, 26, 36, 28, 31, 40, 26, 26, 43, 47, 55, 30],
-                    [0, 1, 2, 4, 4, 6, 6, 13, 9, 10, 16, 18, 21, 16, 16, 16, 31, 17, 27, 23, 31, 29, 35, 39, 30, 32, 26, 43, 51, 46],
-                    [0, 1, 3, 4, 6, 5, 11, 9, 11, 11, 13, 15, 14, 22, 20, 15, 31, 27, 25, 25, 36, 30, 37, 29, 29, 39, 40, 49, 34, 35],
-                    [0, 1, 3, 5, 7, 5, 9, 9, 10, 17, 13, 21, 14, 16, 23, 23, 25, 17, 24, 34, 27, 39, 33, 45, 47, 32, 40, 36, 49, 32],
-                    [0, 1, 3, 3, 7, 5, 8, 11, 12, 13, 16, 17, 20, 24, 27, 15, 22, 33, 35, 24, 32, 35, 41, 39, 24, 31, 51, 29, 45, 50]
-                ]
-            };
+        this.data = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            series: [
+                [5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
+                [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
+            ]
+        };
 
-            this.lineOptions = {
+        this.options = {
+            seriesBarDistance: 15
+        };
+
+        this.responsiveOptions = [
+            ['screen and (min-width: 641px) and (max-width: 1024px)', {
+                seriesBarDistance: 10,
                 axisX: {
                     labelInterpolationFnc: function(value) {
                         return value;
                     }
                 }
-            };
+            }],
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function(value) {
+                        return value[0];
+                    }
+                }
+            }]
+        ];
 
-            // pie chart
-            this.pieData = {
-                series: [20, 10, 30, 40]
-            };
+        // // Use $interval to update bar chart data
+        // var barUpdatePromise = $interval(function() {
+        //     var time = new Date();
 
-            // donut chart
-            this.donutOptions = {
-                donut: true
-            };
+        //     pushLimit(this.data.labels, [
+        //         time.getHours(),
+        //         time.getMinutes(),
+        //         time.getSeconds()
+        //     ].join(':'), 12);
 
-            function pushLimit(arr, elem, limit) {
-                arr.push(elem);
-                if (arr.length > limit) {
-                    arr.splice(0, 1);
+        //     this.data.series.forEach(function(series) {
+        //         pushLimit(series, getRandomInt(0, 10), 12);
+        //     });
+        // }.bind(this), 1000);
+
+        // // // Cancel interval once scope is destroyed
+        // $scope.$on('$destroy', function() {
+        //     $interval.cancel(barUpdatePromise);
+        // });
+    }
+
+    module.controller('ChartistBarCtrl', ['$scope', '$interval', ChartistBarCtrl]);
+
+    function ChartistLineCtrl() {
+        this.data = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            series: [
+                [0, 1, 2, 4, 7, 6, 9, 10, 8, 10, 14, 13, 16, 14, 17, 19, 20, 31, 32, 26, 36, 28, 31, 40, 26, 26, 43, 47, 55, 30],
+                [0, 1, 2, 4, 4, 6, 6, 13, 9, 10, 16, 18, 21, 16, 16, 16, 31, 17, 27, 23, 31, 29, 35, 39, 30, 32, 26, 43, 51, 46],
+                [0, 1, 3, 4, 6, 5, 11, 9, 11, 11, 13, 15, 14, 22, 20, 15, 31, 27, 25, 25, 36, 30, 37, 29, 29, 39, 40, 49, 34, 35],
+                [0, 1, 3, 5, 7, 5, 9, 9, 10, 17, 13, 21, 14, 16, 23, 23, 25, 17, 24, 34, 27, 39, 33, 45, 47, 32, 40, 36, 49, 32],
+                [0, 1, 3, 3, 7, 5, 8, 11, 12, 13, 16, 17, 20, 24, 27, 15, 22, 33, 35, 24, 32, 35, 41, 39, 24, 31, 51, 29, 45, 50]
+            ]
+        };
+
+        this.options = {
+            axisX: {
+                labelInterpolationFnc: function(value) {
+                    return value;
                 }
             }
+        };
+    }
 
-            // Use $interval to update bar chart data
-            var barUpdatePromise = $interval(function() {
-                var time = new Date();
+    module.controller('ChartistLineCtrl', [ChartistLineCtrl]);
 
-                pushLimit(this.barData.labels, [
-                    time.getHours(),
-                    time.getMinutes(),
-                    time.getSeconds()
-                ].join(':'), 12);
+    function ChartistPieCtrl() {
+        this.data = {
+            series: [20, 10, 30, 40]
+        };
 
-                this.barData.series.forEach(function(series) {
-                    pushLimit(series, getRandomInt(0, 10), 12);
-                });
-            }.bind(this), 1000);
+        this.handlers = {
+            click: this.onClick.bind(this)
+        };
+    }
 
-            // Cancel interval once scope is destroyed
-            $scope.$on('$destroy', function() {
-                $interval.cancel(barUpdatePromise);
-            });
-        }
-    ]);
+    ChartistPieCtrl.prototype.onClick = function() {
+        console.log(this);
+    };
+
+    module.controller('ChartistPieCtrl', [ChartistPieCtrl]);
+
+    function ChartistDonutCtrl() {
+        this.data = {
+            series: [20, 10, 30, 40]
+        };
+
+        this.options = {
+            donut: true
+        };
+    }
+
+    module.controller('ChartistDonutCtrl', [ChartistDonutCtrl]);
 
 })(angular);
