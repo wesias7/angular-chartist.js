@@ -55,7 +55,7 @@
     "chartist": "^0.9.8",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.2.0",
-    "coveralls": "^2.11.9",
+    "coveralls": "^2.11.13",
     "css-loader": "^0.25.0",
     "eslint": "^3.1.1",
     "git-scripts": "^0.2.1",
